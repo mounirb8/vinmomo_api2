@@ -1,0 +1,53 @@
+## Build
+bin/
+obj/
+out/
+
+## Visual Studio
+.vs/
+*.user
+*.suo
+*.cache
+*.userprefs
+
+## Logs
+*.log
+
+## .NET
+project.lock.json
+project.fragment.lock.json
+artifacts/
+*.pidb
+*.svclog
+*.pdb
+
+## Configuration locale / secrets
+appsettings.Development.json
+appsettings.Local.json
+appsettings.*.json
+**/secrets.json
+*.env
+
+## Packages
+*.nupkg
+packages/
+*.snupkg
+
+## Transient files
+*.tmp
+*.temp
+*.bak
+
+## Publish outputs
+publish/
+dist/
+
+## Rider / VS Code / JetBrains
+.idea/
+*.csproj.user
+*.DotSettings.user
+.vscode/
+
+## OS
+.DS_Store
+Thumbs.db
