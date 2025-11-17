@@ -7,50 +7,50 @@ namespace vinmomo_api_2.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SiteController : ControllerBase
+    public class ServiceController : ControllerBase
     {
         private readonly AnnuaireContext _context;
 
-        public SiteController(AnnuaireContext context)
+        public ServiceController(AnnuaireContext context)
         {
             _context = context;
         }
 
-        // GET: api/Site
+        // GET: api/Service
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Site>>> GetSites()
+        public async Task<ActionResult<IEnumerable<Service>>> GetServices()
         {
-            return await _context.Sites
+            return await _context.Services
                 .Include(s => s.Salaries)
                 .ToListAsync();
         }
 
-        // GET: api/Site/5
+        // GET: api/Service/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Site>> GetSite(int id)
+        public async Task<ActionResult<Service>> GetService(int id)
         {
-            var site = await _context.Sites
+            var service = await _context.Services
                 .Include(s => s.Salaries)
                 .FirstOrDefaultAsync(s => s.Id == id);
 
-            if (site == null)
+            if (service == null)
             {
                 return NotFound();
             }
 
-            return site;
+            return service;
         }
 
-        // PUT: api/Site/5
+        // PUT: api/Service/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutSite(int id, Site site)
+        public async Task<IActionResult> PutService(int id, Service service)
         {
-            if (id != site.Id)
+            if (id != service.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(site).State = EntityState.Modified;
+            _context.Entry(service).State = EntityState.Modified;
 
             try
             {
@@ -58,7 +58,7 @@ namespace vinmomo_api_2.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!SiteExists(id))
+                if (!ServiceExists(id))
                 {
                     return NotFound();
                 }
@@ -71,35 +71,35 @@ namespace vinmomo_api_2.Controllers
             return NoContent();
         }
 
-        // POST: api/Site
+        // POST: api/Service
         [HttpPost]
-        public async Task<ActionResult<Site>> PostSite(Site site)
+        public async Task<ActionResult<Service>> PostService(Service service)
         {
-            _context.Sites.Add(site);
+            _context.Services.Add(service);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetSite), new { id = site.Id }, site);
+            return CreatedAtAction(nameof(GetService), new { id = service.Id }, service);
         }
 
-        // DELETE: api/Site/5
+        // DELETE: api/Service/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteSite(int id)
+        public async Task<IActionResult> DeleteService(int id)
         {
-            var site = await _context.Sites.FindAsync(id);
-            if (site == null)
+            var service = await _context.Services.FindAsync(id);
+            if (service == null)
             {
                 return NotFound();
             }
 
-            _context.Sites.Remove(site);
+            _context.Services.Remove(service);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool SiteExists(int id)
+        private bool ServiceExists(int id)
         {
-            return _context.Sites.Any(e => e.Id == id);
+            return _context.Services.Any(e => e.Id == id);
         }
     }
 }

@@ -3,34 +3,31 @@ using vinmomo_api_2.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Charger la connexion depuis appsettings.json
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
+// DbContext MySQL
+builder.Services.AddDbContext<AnnuaireContext>(options =>
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
+);
+
+// Controllers + Swagger
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Enregistrer le DbContext
-builder.Services.AddDbContext<AnnuaireContext>(options =>
-    options.UseMySql(
-        builder.Configuration.GetConnectionString("DefaultConnection")
-        ?? "Server=localhost;Database=annuaire_db;User=root;Password=mysql",
-        ServerVersion.AutoDetect("Server=localhost;Database=annuaire_db;User=root;Password=mysql")
-    ));
-
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Swagger
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
+// Middleware
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();
